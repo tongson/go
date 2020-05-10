@@ -1,4 +1,4 @@
-package github.com/tongson/go/lib
+package lib
 
 import (
 	"bytes"
@@ -28,17 +28,17 @@ type panicT struct {
 // The first return value is a boolean, true indicates success, false otherwise.
 // Second value is the standard output of the command.
 // Third value is the standard error of the command.
-func (r RunArgs) Run() (bool, string, string) {
+func (a RunArgs) Run() (bool, string, string) {
 	var r bool = true
-	cmd := exec.Command(r.Exe, r.Args...)
-	if len(r.Dir) > 0 {
-		cmd.Dir = r.Dir
+	cmd := exec.Command(a.Exe, a.Args...)
+	if len(a.Dir) > 0 {
+		cmd.Dir = a.Dir
 	}
-	if r.Env != nil || len(r.Env) > 0 {
-		cmd.Env = append(os.Environ(), r.Env...)
+	if a.Env != nil || len(a.Env) > 0 {
+		cmd.Env = append(os.Environ(), a.Env...)
 	}
-	if r.Input != nil || len(r.Input) > 0 {
-		cmd.Stdin = bytes.NewBuffer(r.Input)
+	if a.Input != nil || len(a.Input) > 0 {
+		cmd.Stdin = bytes.NewBuffer(a.Input)
 	}
 	var stdout bytes.Buffer
 	var stderr bytes.Buffer
